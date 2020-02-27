@@ -20,4 +20,11 @@ node {
     stage('Compile-Package'){
     sh 'mvn package'
     }
+    
+    
+    stage('deploy WAR'){
+        sshagent(['tomcat-dev']) {
+            sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@172.31.20.228:/opt/tomcat/webapps'
+        }
+    }
 }
